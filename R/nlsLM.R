@@ -263,6 +263,11 @@ nlsLM <- function (formula, data = parent.frame(), start, jac = NULL,
   ## need to use '$tol' parameter from nls.control to make 'predict.nls' work
   nls.out$call$control <- nls.control()
   nls.out$call$trace <- FALSE
+  
+  ## need bounds evaluated for profiling, otherwise (if given) will be interpreted as a call and fail profiling
+  nls.out$call$lower <- lower
+  nls.out$call$upper <- upper
+  
   nls.out$na.action <- attr(mf, "na.action")
   nls.out$dataClasses <- attr(attr(mf, "terms"), "dataClasses")[varNamesRHS]
   if (model) 
